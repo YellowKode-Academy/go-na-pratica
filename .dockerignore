@@ -1,0 +1,16 @@
+bin/
+*.exe
+*.prof
+*.db
+*.db-wal
+*.db-shm
+.env
+*.local.yaml
+.git/
+.gitignore
+*_test.go
+testdata/
+docs/
+README.md
+.vscode/
+.idea/
