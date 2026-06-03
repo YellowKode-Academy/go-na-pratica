@@ -26,9 +26,17 @@ type SQLiteRepository struct {
 	db *sqlx.DB
 }
 
+// normalizeDSN converte um caminho simples para o formato URI exigido pelo modernc.org/sqlite v1.51+.
+func normalizeDSN(dsn string) string {
+	if dsn == ":memory:" || strings.HasPrefix(dsn, "file:") {
+		return dsn
+	}
+	return "file:" + dsn
+}
+
 // NewSQLiteRepository abre o banco e aplica o schema.
 func NewSQLiteRepository(dsn string) (*SQLiteRepository, error) {
-	db, err := sqlx.Open("sqlite", dsn)
+	db, err := sqlx.Open("sqlite", normalizeDSN(dsn))
 	if err != nil {
 		return nil, fmt.Errorf("abrir banco: %w", err)
 	}
@@ -71,7 +79,7 @@ func (r *SQLiteRepository) FindByID(ctx context.Context, id int64) (link.Link, e
 
 func (r *SQLiteRepository) List(ctx context.Context) ([]link.Link, error) {
 	var links []link.Link
-	if err := r.db.SelectContext(ctx, &links, "SELECT * FROM links ORDER BY created_at DESC"); err != nil {
+	if err := r.db.SelectContext(ctx, &links, "SELECT * FROM links ORDER BY created_dat DESC"); err != nil {
 		return nil, fmt.Errorf("listar links: %w", err)
 	}
 	return links, nil
