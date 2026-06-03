@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   api:
     build:
@@ -10,7 +8,7 @@ services:
     environment:
       PORT: "8080"
       JWT_SECRET: "dev-secret-nao-use-em-producao"
-      DATABASE_PATH: "/data/linkvault.db"
+      DATABASE_URL: "/data/linkvault.db"
     volumes:
       - linkvault-data:/data
     restart: unless-stopped
