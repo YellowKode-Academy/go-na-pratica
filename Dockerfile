@@ -19,16 +19,17 @@ RUN CGO_ENABLED=0 \
       -o /linkvault-api \
       ./cmd/api
 
-# Criar diretório de dados com ownership do nonroot (uid=65532)
-RUN mkdir -p /data && chown 65532:65532 /data
-
 
 # Stage 2: runner — imagem final mínima
-FROM gcr.io/distroless/static-debian12
+FROM alpine:3.21
 
-# Copiar o binário e o diretório de dados do stage de build
+# Criar usuário não-root e diretório de dados
+RUN addgroup -g 65532 nonroot && \
+    adduser -u 65532 -G nonroot -D nonroot && \
+    mkdir -p /data && chown nonroot:nonroot /data
+
+# Copiar apenas o binário do stage de build
 COPY --from=builder /linkvault-api /linkvault-api
-COPY --from=builder /data /data
 
 # Usuário não-root por segurança
 USER nonroot:nonroot
