@@ -1,4 +1,10 @@
-# LinkVault
+﻿# LinkVault
+
+[![Capa do Livro](cover.jpg)](https://www.amazon.com.br/dp/B0H3WTFPCW)
+
+> **[Disponivel na Amazon.com.br](https://www.amazon.com.br/dp/B0H3WTFPCW)** — R$24,97
+
+---
 
 Repositorio oficial do livro **Go na Prática**.
 
